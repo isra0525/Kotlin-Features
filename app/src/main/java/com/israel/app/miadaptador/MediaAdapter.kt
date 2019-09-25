@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.israel.app.miadaptador.MediaItem.Type
+import kotlinx.android.synthetic.main.view_media_item.view.*
 
 class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -23,18 +24,16 @@ class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapte
     }
 
     class ViewHolder(view : View) :RecyclerView.ViewHolder(view) {
-        //val title = view.findViewById(R.id.media_title) as TextView
-        val title = find<TextView>(R.id.media_title)
-        val image = find<ImageView>(R.id.image)
-        val videoIndicator = find<ImageView>(R.id.media_video_indicator)
-
         fun bind(item: MediaItem){
-            title.text = item.title
-            image.loadUrl(item.url)
-            videoIndicator.visibility = when (item.type) {
-                Type.PHOTO -> GONE
-                Type.VIDEO -> VISIBLE
-                else -> GONE
+
+            with(itemView){
+                media_title.text = item.title
+                media_thumb.loadUrl(item.url)
+                media_video_indicator.visibility = when (item.type) {
+                    Type.PHOTO -> GONE
+                    Type.VIDEO -> VISIBLE
+                    else -> GONE
+                }
             }
         }
     }
