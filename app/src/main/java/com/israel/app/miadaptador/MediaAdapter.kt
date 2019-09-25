@@ -10,7 +10,8 @@ import com.squareup.picasso.Picasso
 
 class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.view_media_item, parent, false)
+        //val v = LayoutInflater.from(parent.context).inflate(R.layout.view_media_item, parent, false)
+        val v = parent.inflate(R.layout.view_media_item)
         return ViewHolder(v)
     }
 
@@ -25,7 +26,7 @@ class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapte
         val image = view.findViewById(R.id.image) as ImageView
         fun bind(item: MediaItem){
             title.text = item.title
-            Picasso.with(image.context).load(item.url).into(image)
+            image.loadUrl(item.url)
         }
     }
 
