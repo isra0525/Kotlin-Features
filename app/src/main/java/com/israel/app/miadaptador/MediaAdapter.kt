@@ -10,9 +10,15 @@ import android.widget.TextView
 import com.israel.app.miadaptador.MediaItem.Type
 import kotlinx.android.synthetic.main.view_media_item.view.*
 
-class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
+class MediaAdapter(val items: List<MediaItem>, val listener: OnMediaClickListener)
+    : RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
+
+
+    interface OnMediaClickListener {
+        fun onClick(mediaItem: MediaItem)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        //val v = LayoutInflater.from(parent.context).inflate(R.layout.view_media_item, parent, false)
         val v = parent.inflate(R.layout.view_media_item)
         return ViewHolder(v)
     }
@@ -20,7 +26,9 @@ class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapte
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items.get(position))
+        val item = items[position]
+        holder.bind(item)
+        holder.itemView.setOnClickListener { listener.onClick(item)}
     }
 
     class ViewHolder(view : View) :RecyclerView.ViewHolder(view) {
@@ -28,11 +36,12 @@ class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapte
 
             with(itemView){
                 media_title.text = item.title
+                print(item.url)
                 media_thumb.loadUrl(item.url)
                 media_video_indicator.visibility = when (item.type) {
                     Type.PHOTO -> GONE
                     Type.VIDEO -> VISIBLE
-                    else -> GONE
+                    else -> VISIBLE
                 }
             }
         }
