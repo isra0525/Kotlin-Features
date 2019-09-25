@@ -22,3 +22,11 @@ fun ViewGroup.inflate(layoutRes: Int): View {
 fun ImageView.loadUrl(url: String) {
     Picasso.with(context).load(url).into(this)
 }
+
+inline fun <reified T: View> View.find(idRes: Int): T {
+    return findViewById<T>(idRes)
+}
+
+inline fun <reified T: View> RecyclerView.ViewHolder.find(idRes: Int): T {
+    return itemView.find(idRes)
+}

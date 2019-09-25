@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import java.nio.file.Files.find
 
 class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -22,8 +23,9 @@ class MediaAdapter(val items: List<MediaItem>): RecyclerView.Adapter<MediaAdapte
     }
 
     class ViewHolder(view : View) :RecyclerView.ViewHolder(view) {
-        val title = view.findViewById(R.id.media_title) as TextView
-        val image = view.findViewById(R.id.image) as ImageView
+        //val title = view.findViewById(R.id.media_title) as TextView
+        val title = find<TextView>(R.id.media_title)
+        val image = find<ImageView>(R.id.image)
         fun bind(item: MediaItem){
             title.text = item.title
             image.loadUrl(item.url)
