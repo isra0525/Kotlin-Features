@@ -10,13 +10,8 @@ import android.widget.TextView
 import com.israel.app.miadaptador.MediaItem.Type
 import kotlinx.android.synthetic.main.view_media_item.view.*
 
-class MediaAdapter(val items: List<MediaItem>, val listener: OnMediaClickListener)
+class MediaAdapter(val items: List<MediaItem>, val listener: (MediaItem) -> Unit)
     : RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
-
-
-    interface OnMediaClickListener {
-        fun onClick(mediaItem: MediaItem)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val v = parent.inflate(R.layout.view_media_item)
@@ -28,7 +23,7 @@ class MediaAdapter(val items: List<MediaItem>, val listener: OnMediaClickListene
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener { listener.onClick(item)}
+        holder.itemView.setOnClickListener { listener(item)}
     }
 
     class ViewHolder(view : View) :RecyclerView.ViewHolder(view) {
