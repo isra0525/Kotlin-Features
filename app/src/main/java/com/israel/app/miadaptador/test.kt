@@ -4,6 +4,9 @@ fun doAsync(x: Int, callBack: (String) -> Unit) {
     callBack.invoke("Finished")
 }
 
-fun test() {
-    doAsync(20) {result -> print(result)}
+fun test(items: List<MediaItem>) {
+    val urlList: List<String> = items
+        .filter { it.type == MediaItem.Type.PHOTO }
+        .sortedBy { it.title }
+        .map { it.url }
 }
