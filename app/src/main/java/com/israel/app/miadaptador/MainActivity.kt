@@ -7,10 +7,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    val adapter = MediaAdapter(MediaProvider.data) { mediaItem -> toast(mediaItem.title) }
+    val adapter = MediaAdapter(MediaProvider.data) { navigateToDetail(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,5 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         }
         return true
+    }
+
+    private fun navigateToDetail(item: MediaItem) {
+        startActivity<DetailActivity>(DetailActivity.ID to item.id)
     }
 }
