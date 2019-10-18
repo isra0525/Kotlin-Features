@@ -14,7 +14,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val ud = intent.getIntExtra(ID, -1)
+        val id = intent.getIntExtra(ID, -1)
 
         MediaProvider.dataAsync { media ->
             val item = media.find {it.id == id}
