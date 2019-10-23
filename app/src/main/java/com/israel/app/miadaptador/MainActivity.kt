@@ -11,14 +11,14 @@ import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    val adapter = MediaAdapter(MediaProvider.data) { navigateToDetail(it) }
+    val adapter = MediaAdapter { navigateToDetail(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recycler.adapter = adapter
 
-        val myLazyVal  by lazy { Log.d("","")}
+        MediaProvider.dataAsync { adapter.items = it }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -27,12 +27,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        adapter.items = MediaProvider.data.let { media ->
-            when (item.itemId) {
+        MediaProvider.dataAsync { media ->
+            adapter.items = when (item.itemId) {
                 R.id.filter_all -> media
                 R.id.filter_photos ->media.filter { it.type == MediaItem.Type.PHOTO }
                 R.id.filter_videos ->media.filter { it.type == MediaItem.Type.VIDEO }
-
                 else -> emptyList()
             }
 

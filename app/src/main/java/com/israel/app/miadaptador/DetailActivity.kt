@@ -2,6 +2,8 @@ package com.israel.app.miadaptador
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.doAsync
 
 class DetailActivity : AppCompatActivity() {
@@ -17,7 +19,14 @@ class DetailActivity : AppCompatActivity() {
         val id = intent.getIntExtra(ID, -1)
 
         MediaProvider.dataAsync { media ->
-            val item = media.find {it.id == id}
+            media.find {it.id == id}?.let {item ->
+                supportActionBar?.title = item.title
+                detail_thumb.loadUrl(item.url)
+                detail_video_indicator.visibility = when (item.type) {
+                    MediaItem.Type.PHOTO -> View.GONE
+                    MediaItem.Type.VIDEO -> View.VISIBLE
+                }
+            }
 
         }
     }
